@@ -1,14 +1,18 @@
-import { booruTypeList, defaultBooruList, findBoorusWithValueByKey, } from '~/assets/lib/rule-34-shared-resources/src/util/BooruUtils.js'
+import {
+  booruTypeList,
+  defaultBooruList,
+  findBoorusWithValueByKey
+} from '~/assets/lib/rule-34-shared-resources/src/util/BooruUtils.js'
 import { RouterHelper } from '~/assets/js/RouterHelper'
 
 export const state = () => ({
   history: {
-    lastDomainUsed: defaultBooruList[0].domain,
+    lastDomainUsed: defaultBooruList[0].domain
   },
 
   posts: {
-    data: [],
-  },
+    data: []
+  }
 })
 
 export const getters = {
@@ -74,7 +78,7 @@ export const getters = {
     }
 
     return tags.split(',')
-  },
+  }
 }
 
 export const mutations = {
@@ -84,7 +88,7 @@ export const mutations = {
 
   setPostsData(state, value) {
     state.posts.data = Object.freeze(value)
-  },
+  }
 }
 
 export const actions = {
@@ -101,12 +105,12 @@ export const actions = {
 
         if (booru == null) {
           this.$sentry.captureException(
-            new Error(`Could not find booru with domain: ${ value }`),
+            new Error(`Could not find booru with domain: ${value}`),
             {
               extra: {
                 domain: value,
-                booruList: getters.getBooruList,
-              },
+                booruList: getters.getBooruList
+              }
             }
           )
           return
@@ -206,14 +210,14 @@ export const actions = {
         limit: rootState.user.settings.postsPerPage.value,
         pageID: getters.getPageID,
         tags: getters.getTags.join(','),
-        score: rootState.user.settings.score.value,
+        score: rootState.user.settings.score.value
       },
 
       singlePost: {
-        id: postID,
+        id: postID
       },
 
-      tags: { tag, limit: 15, order: 'count' },
+      tags: { tag, limit: 15, order: 'count' }
     }
 
     const urlToFetch = new URL(
@@ -290,42 +294,50 @@ export const actions = {
     return urlToFetch.toString()
   },
 
-  async fetchPosts({ getters, dispatch }, mode) {
-    // Tip: Actions that return a value have to be awaited
-    const url = await dispatch('createApiUrl', { mode: 'posts' })
+  async fetchPosts({ getters, dispatch }, mode = undefined) {
+    const API_URL = await dispatch('createApiUrl', { mode: 'posts' })
 
     const ACTIVE_BOORU_DOMAIN = getters.getActiveBooru.domain
 
     try {
-      const response = await dispatch('simpleApiFetch',
+      const response = await dispatch(
+        'simpleApiFetch',
         {
-          url,
+          url: API_URL
         },
         { root: true }
       )
 
-      // This is how a final booru object looks like
+      if (!response.data || !Array.isArray(response.data)) {
+        throw new Error('API response did not contain data')
+      }
+
+      // This is how a final Booru object looks like
       const POSTS = response.data.map((POST) => {
         return {
-          id: `${ ACTIVE_BOORU_DOMAIN }-${ POST.id }`,
+          id: `${ACTIVE_BOORU_DOMAIN}-${POST.id}`,
           data: POST,
           meta_data: {
             booru_domain: ACTIVE_BOORU_DOMAIN,
-            created_at: null,
-          },
+            created_at: null
+          }
         }
       })
 
-      if (mode === 'concat') {
-        dispatch('postsManager', { operation: 'concat', value: POSTS })
-      } else {
-        dispatch('postsManager', { operation: 'set', value: POSTS })
+      switch (mode) {
+        case 'concat':
+          dispatch('postsManager', { operation: 'concat', value: POSTS })
+          break
+
+        case 'set':
+        default:
+          dispatch('postsManager', { operation: 'set', value: POSTS })
+          break
       }
 
       //
     } catch (error) {
-
-      this.$toast.error(`Could not fetch posts: "${ error.message }"`)
+      this.$toast.error(`Could not fetch posts: "${error.message}"`)
     }
   },
 
@@ -338,17 +350,21 @@ export const actions = {
       const response = await dispatch(
         'simpleApiFetch',
         {
-          url,
+          url
         },
         { root: true }
       )
 
+      if (!response.data || !Array.isArray(response.data)) {
+        throw new Error('API response did not contain data')
+      }
+
       // This is how a final Booru Tag object looks like
       const TAGS = response.data.map((TAG) => {
         return {
-          id: `${ ACTIVE_BOORU_DOMAIN }-${ TAG.name }`,
+          id: `${ACTIVE_BOORU_DOMAIN}-${TAG.name}`,
           name: TAG.name,
-          count: TAG.count,
+          count: TAG.count
         }
       })
 
@@ -356,8 +372,7 @@ export const actions = {
 
       //
     } catch (error) {
-
-      this.$toast.error(`Could not search tags: "${ error.message }"`)
+      this.$toast.error(`Could not search tags: "${error.message}"`)
     }
-  },
+  }
 }
