@@ -46,7 +46,6 @@
 
     <PostsControls
       :current-page="currentPage"
-      :force-normal-controls="true"
       :minimum-page="0"
       @setPage="onPageChange"
     />
