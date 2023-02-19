@@ -33,6 +33,16 @@
           <span class='text-md'> Restore </span>
         </button>
       </div>
+
+      <div>
+        <h2 class='text-2xl font-semibold text-white'>
+          Backup to Google Drive
+        </h2>
+
+        <button class='focus-visible:focus-util border-util bg-gray-900 link p-2 rounded-lg' type='button' @click='loginToGoogle'>
+          Connect Google
+        </button>
+      </div>
     </div>
   </main>
 </template>
@@ -123,6 +133,10 @@
         restoreStateToStore(RESTORED_STATE, this.$store)
 
         this.$toast.info('Backup restored sucessfully')
+      }
+
+      , loginToGoogle() {
+        this.$auth.loginWith('google', {})
       }
     }
   }

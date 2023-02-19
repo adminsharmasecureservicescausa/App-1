@@ -153,6 +153,11 @@ export default {
       },
 
       google: {
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        scope: ['openid', 'profile', 'email', 'drive.appdata'],
+
+        codeChallengeMethod: '',
+        responseType: 'token id_token'
       }
     },
 
