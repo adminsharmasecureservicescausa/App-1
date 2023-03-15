@@ -7,7 +7,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
-  generate: { fallback: true },
+  generate: {fallback: true},
 
   server: {
     host: '0.0.0.0'
@@ -20,6 +20,8 @@ export default {
 
     PROXY_URL: process.env.PROXY_URL,
 
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+
     MATOMO_HOST: process.env.MATOMO_HOST,
     MATOMO_SITE_ID: process.env.MATOMO_SITE_ID
   },
@@ -28,9 +30,7 @@ export default {
     title: null,
 
     titleTemplate: (titleChunk) => {
-      return titleChunk
-        ? `${titleChunk} | Rule 34 App`
-        : 'Rule 34 App – Popular Hentai Porn'
+      return titleChunk ? `${titleChunk} | Rule 34 App` : 'Rule 34 App – Popular Hentai Porn'
     },
 
     htmlAttrs: {
@@ -38,11 +38,11 @@ export default {
     },
 
     meta: [
-      { charset: 'utf-8' },
-      { 'http-equiv': 'Cache-Control', content: 'no-cache' },
-      { 'http-equiv': 'Pragma', content: 'no-cache' },
-      { 'http-equiv': 'Expires', content: '0' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {charset: 'utf-8'},
+      {'http-equiv': 'Cache-Control', content: 'no-cache'},
+      {'http-equiv': 'Pragma', content: 'no-cache'},
+      {'http-equiv': 'Expires', content: '0'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
       {
         hid: 'description',
         name: 'description',
@@ -65,7 +65,7 @@ export default {
       }
     ],
 
-    noscript: [{ innerHTML: 'This website requires JavaScript' }]
+    noscript: [{innerHTML: 'This website requires JavaScript'}]
   },
 
   loading: {
@@ -86,14 +86,14 @@ export default {
 
   css: ['@/assets/css/main.css'],
 
-  components: [{ path: '~/components', pathPrefix: false }],
+  components: [{path: '~/components', pathPrefix: false}],
 
   plugins: [
-    { src: '~/plugins/a.pwa-update.js', mode: 'client' },
-    { src: '~/plugins/c.vuex-persist.js', mode: 'client' },
-    { src: '~/plugins/e.vuex-router-sync.js', mode: 'client' },
-    { src: '~/plugins/g.migrate-state.js', mode: 'client' },
-    { src: '~/plugins/z.vue-matomo.js', mode: 'client' }
+    {src: '~/plugins/a.pwa-update.js', mode: 'client'},
+    {src: '~/plugins/c.vuex-persist.js', mode: 'client'},
+    {src: '~/plugins/e.vuex-router-sync.js', mode: 'client'},
+    {src: '~/plugins/g.migrate-state.js', mode: 'client'},
+    {src: '~/plugins/z.vue-matomo.js', mode: 'client'}
   ],
 
   buildModules: ['@nuxt/postcss8'],
@@ -142,23 +142,15 @@ export default {
         },
 
         endpoints: {
-          login: { url: `${process.env.API_URL}/auth/log-in`, method: 'post' },
+          login: {url: `${process.env.API_URL}/auth/log-in`, method: 'post'},
           refresh: {
             url: `${process.env.API_URL}/auth/refresh`,
             method: 'post'
           },
           logout: false,
-          user: { url: `${process.env.API_URL}/auth/profile`, method: 'get' }
+          user: {url: `${process.env.API_URL}/auth/profile`, method: 'get'}
         }
       },
-
-      google: {
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        scope: ['openid', 'profile', 'email', 'drive.appdata'],
-
-        codeChallengeMethod: '',
-        responseType: 'token id_token'
-      }
     },
 
     watchLoggedIn: true,
@@ -166,11 +158,11 @@ export default {
     redirect: {
       login: '/premium',
       logout: '/premium',
-      callback: false,
+      // callback: false,
       home: false
     },
 
-    vuex: { namespace: 'authentication' }
+    vuex: {namespace: 'authentication'}
   },
 
   pwa: {
@@ -300,11 +292,11 @@ export default {
     // Static HTML files
     routes: [
       // Main
-      { url: '/', priority: 1.0 },
+      {url: '/', priority: 1.0},
 
       // Misc
-      { url: '/privacy-policy', priority: 0.2 },
-      { url: '/terms-of-service', priority: 0.2 }
+      {url: '/privacy-policy', priority: 0.2},
+      {url: '/terms-of-service', priority: 0.2}
     ]
   },
 
