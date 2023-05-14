@@ -1,31 +1,31 @@
 export default {
-  methods: {
-    async keyboardPageHandler() {
-      switch (event.keyCode) {
-        case 39:
-          console.debug('Loading next page via keyboard action.')
+	methods: {
+		async keyboardPageHandler() {
+			switch (event.keyCode) {
+				case 39:
+					console.debug('Loading next page via keyboard action.')
 
-          await this.getNextPage()
+					await this.getNextPage()
 
-          break
+					break
 
-        case 37:
-          console.debug('Loading previous page via keyboard action.')
+				case 37:
+					console.debug('Loading previous page via keyboard action.')
 
-          await this.getPrevPage()
+					await this.getPrevPage()
 
-          break
-      }
-    }
-  },
+					break
+			}
+		}
+	},
 
-  mounted() {
-    // Navigation with keyboard
-    document.addEventListener('keyup', this.keyboardPageHandler)
-  },
+	mounted() {
+		// Navigation with keyboard
+		document.addEventListener('keyup', this.keyboardPageHandler)
+	},
 
-  destroyed() {
-    // Navigation with keyboard
-    document.removeEventListener('keyup', this.keyboardPageHandler)
-  }
+	unmounted() {
+		// Navigation with keyboard
+		document.removeEventListener('keyup', this.keyboardPageHandler)
+	}
 }

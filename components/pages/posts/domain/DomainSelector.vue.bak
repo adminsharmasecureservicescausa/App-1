@@ -1,0 +1,85 @@
+<template>
+	<div class="material-container focus-within:focus-util relative flex items-center justify-center gap-2 rounded-full">
+		<!-- Cloud icon -->
+		<div
+			class="inline-flex items-center pl-2"
+			for="domain-selector"
+		>
+			<CloudIcon class="icon h-4 w-4 text-primary-400" />
+		</div>
+
+		<!-- Selector -->
+		<select
+			aria-label="Change the domain where the content is pulled from"
+			class="inline-flex appearance-none items-center bg-base-900 font-light text-primary-400 outline-none"
+			@change="emitDomainChange"
+		>
+			<template
+				v-for="domainGroup in domainGroupList"
+				:key="domainGroup.name"
+			>
+				<!--  -->
+
+				<optgroup :label="domainGroup.name">
+					<!--  -->
+
+					<template
+						v-for="domain in domainGroup.domains"
+						:key="domain"
+					>
+						<!--  -->
+
+						<option
+							:aria-label="'Change domain to ' + domain"
+							:selected="activeDomain === domain"
+							:value="domain"
+						>
+							{{ domain }}
+						</option>
+					</template>
+				</optgroup>
+			</template>
+		</select>
+
+		<!-- Drop icon -->
+		<div
+			class="inline-flex items-center pr-2"
+			for="domain-selector"
+		>
+			<ChevronDownIcon class="icon h-4 w-4" />
+		</div>
+	</div>
+</template>
+
+<script>
+import { ChevronDownIcon, CloudIcon } from 'vue-feather-icons'
+
+export default {
+	components: { ChevronDownIcon, CloudIcon },
+
+	props: {
+		activeDomain: {
+			type: String,
+			required: true
+		},
+
+		domainGroupList: {
+			type: Array,
+			required: true
+		}
+	},
+
+	methods: {
+		emitDomainChange(event) {
+			if (!event.target.value) {
+				console.debug('No domain selected')
+				return
+			}
+
+			const DOMAIN = event.target.value
+
+			this.$emit('domainChange', DOMAIN)
+		}
+	}
+}
+</script>

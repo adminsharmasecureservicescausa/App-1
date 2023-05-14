@@ -203,38 +203,6 @@ export const state = () => ({
 				}
 			}
 		]
-	},
-
-	settings: {
-		touchGestures: {
-			name: 'Touch gestures',
-			description:
-				'Swiping `left-to-right` will open the navigation menu, and `right-to-left` will open the search menu.',
-			value: true,
-			defaultValue: true
-		},
-
-		fullSizeImages: {
-			name: 'Full size images',
-			description: 'Load full images instead of downscaled images, data intensive.',
-			image: '/img/usage_examples/full-size-images',
-			value: false,
-			defaultValue: false
-		},
-
-		postsPerPage: {
-			name: 'Posts per page',
-			description: 'Number of posts to load per page, hard limit on most boorus is 100.',
-			value: 35,
-			defaultValue: 35
-		},
-
-		score: {
-			name: 'Minimum score',
-			description: 'Required score for a post to show.',
-			value: 0,
-			defaultValue: 0
-		}
 	}
 })
 

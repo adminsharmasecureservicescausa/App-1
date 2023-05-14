@@ -1,0 +1,50 @@
+<template>
+	<div
+		v-intersect="{
+			handler: InfiniteLoadHandler,
+			options: {
+				rootMargin: '600px'
+			}
+		}"
+		class="mx-auto py-12"
+		@click="InfiniteLoadHandler"
+	>
+		<p class="animate-pulse text-center text-gray-300">Loading more posts...</p>
+	</div>
+</template>
+
+<script>
+// Third party
+import { Intersect } from 'vuetify/lib/directives/intersect'
+
+// Components
+import KeyboardNavigationMixin from '~/components/pages/posts/navigation/page/KeyboardNavigationMixin.js'
+
+export default {
+	directives: {
+		Intersect
+	},
+
+	mixins: [KeyboardNavigationMixin],
+
+	methods: {
+		getNextPage() {
+			this.$emit('nextPage')
+		},
+
+		InfiniteLoadHandler(entries, observer) {
+			if (!entries || !entries.length) {
+				return
+			}
+
+			entries.forEach(async (entry) => {
+				if (!entry.isIntersecting) {
+					return
+				}
+
+				await this.getNextPage()
+			})
+		}
+	}
+}
+</script>

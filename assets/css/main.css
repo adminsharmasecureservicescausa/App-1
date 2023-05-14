@@ -1,10 +1,6 @@
-/* #region Tailwind */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* #endregion */
 
 @layer base {
   /* html {
@@ -13,108 +9,17 @@
 }
 
 @layer components {
-  /* #region Utils */
+  /*
+  * NOT TO BE USED DIRECTLY AS CSS
+  * IN CLASSES IT SHOULD BE USED AS `focus-visible:focus-util`
+  */
   .focus-util {
-    /*
-    * NOT TO BE USED DIRECTLY AS CSS
-    * IN CLASSES IT SHOULD BE USED AS `focus-visible:focus-util`
-    */
-    @apply outline-none ring-4 ring-primary-400;
+    @apply outline-none ring-2 ring-base-content-highlight;
   }
 
-  /*  */
   .border-util {
-    @apply rounded border border-darkGray-100;
+    @apply rounded border bg-base-900;
   }
 
-  /*  */
-  .link {
-    @apply text-primary-500 transition-colors duration-300;
-  }
 
-  .link:hover {
-    @apply text-primary-400;
-  }
-
-  .link:focus {
-    @apply focus-util;
-  }
-
-  /* #endregion */
-  /* #region Components */
-  /*  */
-  .icon {
-    stroke-width: 1.6;
-    /* Align middle is necessary for some reason for mobile devices */
-    @apply overflow-visible align-middle text-white;
-  }
-
-  /*  */
-  .material-container {
-    @apply border-util overflow-hidden rounded-lg bg-darkGray-300;
-  }
-
-  /*  */
-  .tag-container {
-    @apply flex flex-wrap content-start items-start gap-2 overflow-hidden bg-darkGray-700 px-2 py-3;
-  }
-
-  /*  */
-  .tag {
-    /*
-    * NOT TO BE USED DIRECTLY AS CSS
-    * IN CLASSES IT SHOULD BE USED WITH `.link`
-    */
-    @apply select-none overflow-hidden rounded-none px-2.5 py-0.5 text-gray-300 leading-normal bg-darkGray-100 rounded-full;
-  }
-
-  /* Active tags */
-  .tag.nuxt-link-exact-active {
-    @apply border-primary-700 bg-primary-700 font-normal text-primary-100 hover:border-primary-600 hover:bg-primary-600 hover:text-primary-100;
-  }
-
-  /* #endregion */
 }
-
-/* ===== CSS that will not be purged ===== */
-
-/* #region Toast theme */
-
-.toasted-container {
-  @apply gap-3;
-}
-
-.toasted-custom-theme {
-  @apply border-2 border-b-4 border-darkGray-100 border-b-accent-300 bg-darkGray-300 text-white sm:gap-2 sm:border-2 !important;
-
-  @apply px-4 py-2 sm:rounded-lg !important;
-}
-
-/*.toasted-custom-theme.error {*/
-/*  @apply border-red-500 !important;*/
-/*}*/
-
-.toasted-custom-theme .action {
-  @apply text-center focus-visible:focus-util m-0 rounded-full border-0 bg-darkGray-100 px-2 py-1 !important;
-}
-
-/* #endregion */
-
-/* #region Transitions and animations */
-
-.nuxt-link-exact-active {
-  @apply font-bold text-primary-400;
-}
-
-/* Page Transition */
-.page-enter-active,
-.page-leave-active {
-  @apply transition-opacity duration-300;
-}
-
-.page-enter,
-.page-leave-to {
-  @apply opacity-0;
-}
-
-/* #endregion */
